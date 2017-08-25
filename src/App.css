@@ -1,0 +1,29 @@
+.App {
+  font-family: 'Roboto', sans-serif;
+}
+
+.content-block{
+  width: 80%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+header{
+  display: flex;
+  flex-direction: row;
+}
+h1{
+  margin: 10px;
+  display: inline-block;
+  font-size: 80px;
+}
+
+h3{
+  margin: 10px;
+  font-size: 30px;
+  display: inline-block;
+}
+
+p{
+  margin: 10px;
+}
