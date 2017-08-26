@@ -1,4 +1,5 @@
 var autoprefixer = require('autoprefixer');
+//var autoprefixer = autoprefixer({grid: false});
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');

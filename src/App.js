@@ -1,10 +1,12 @@
-"use strict";
+
 import React, { Component } from 'react';
 import SimpleStorageContract from '../build/contracts/SimpleStorage.json';
 import Clicker from './Clicker.js';
+import ClickBox from './ClickBox.js'
 import getWeb3 from './utils/getWeb3';
 import Slider from './Slider.js';
 import Increment from './Increment.js';
+import _ from 'lodash';
 
 import './App.css'
 import './css/essentials.css'
@@ -139,15 +141,12 @@ class App extends Component {
         <section className="essentials content-block">
           <div className="locations">
             <h5>locations</h5>
-            <Clicker group="locations" option={essentials.locations[0]}/>
-            <Clicker group="locations" option={essentials.locations[1]}/>
+            <ClickBox list={essentials.locations} group="locations" selected={essentials.locations[0]} />
           </div>
 
           <div className="employment">
             <h5>employment</h5>
-            <Clicker group="employment" option={window.EmploymentType().all[0]}/>
-            <Clicker group="employment" option={window.EmploymentType().all[1]}/>
-            <Clicker group="employment" option={window.EmploymentType().all[2]}/>
+            <ClickBox list={essentials.employmentEnum.all} group="employment" selected={essentials.employment} />
           </div>
 
           <div className="startdate">
@@ -168,11 +167,7 @@ class App extends Component {
 
           <div className="companysize">
             <h5>size of company</h5>
-            <Clicker group="companysize" option={window.CompanySize().all[0]}/>
-            <Clicker group="companysize" option={window.CompanySize().all[1]}/>
-            <Clicker group="companysize" option={window.CompanySize().all[2]}/>
-            <Clicker group="companysize" option={window.CompanySize().all[3]}/>
-            <Clicker group="companysize" option={window.CompanySize().all[4]}/>
+            <ClickBox list={essentials.companysizeEnum.all} group="companysize" selected={essentials.companysize} />
           </div>
 
           <div className="teamsize">
@@ -185,38 +180,32 @@ class App extends Component {
           {methelem}
           <div className="click-wrap">
             <h5>buildserver</h5>
-            <Clicker group="buildserver" option={window.BuildServers().all[0]}/>
-            <Clicker group="buildserver" option={window.BuildServers().all[1]}/>
-            <Clicker group="buildserver" option={window.BuildServers().all[2]}/>
+            <ClickBox list={meth.buildserverEnum.all} group="buildserver" selected={meth.buildserver} />
           </div>
 
           <div className="click-wrap">
             <h5>static code analysis</h5>
-            <Clicker group="staticcodeanalysis" option={window.CodeAnalysisTools().all[0]}/>
+            <ClickBox list={meth.staticcodeanalysisEnum.all} group="staticcodeanalysis" selected={meth.staticcodeanalysis} />
           </div>
 
           <div className="click-wrap">
             <h5>version control</h5>
-            <Clicker group="versioncontrol" option={window.VersionControlSystem().all[0]}/>
-            <Clicker group="versioncontrol" option={window.VersionControlSystem().all[1]}/>
+            <ClickBox list={meth.versioncontrolEnum.all} group="versioncontrol" selected={meth.versioncontrol} />
           </div>
 
           <div className="click-wrap">
             <h5>issue tracker</h5>
-            <Clicker group="issuetracker" option={window.IssueTrackers().all[0]}/>
-            <Clicker group="issuetracker" option={window.IssueTrackers().all[1]}/>
+            <ClickBox list={meth.issuetrackerEnum.all} group="issuetracker" selected={meth.issuetracker} />
           </div>
 
           <div className="click-wrap">
             <h5>knowledge repo</h5>
-            <Clicker group="knowledgerepo" option={window.KnowledgeRepos().all[0]}/>
-            <Clicker group="knowledgerepo" option={window.KnowledgeRepos().all[1]}/>
+            <ClickBox list={meth.knowledgerepoEnum.all} group="knowledgerepo" selected={meth.knowledgerepo} />
           </div>
 
           <div className="click-wrap">
             <h5>agile management</h5>
-            <Clicker group="agilemanagement" option={window.AgileManagementSystems().all[0]}/>
-            <Clicker group="agilemanagement" option={window.AgileManagementSystems().all[1]}/>
+            <ClickBox list={meth.agilemanagementEnum.all} group="agilemanagement" selected={meth.agilemanagement} />
           </div>
 
         </section>
@@ -245,28 +234,17 @@ class App extends Component {
 
           <div className="travel">
             <h4>travel</h4>
-            <div className="specs-wrap">
-              <Clicker group="travel" option={window.TravelOptions().all[0]} />
-              <Clicker group="travel" option={window.TravelOptions().all[1]} />
-              <Clicker group="travel" option={window.TravelOptions().all[2]} />
-            </div>
+            <ClickBox list={specs.travelEnum.all} group="travel" selected={specs.travel} />
           </div>
 
           <div className="remote">
             <h4>remote</h4>
-            <div className="specs-wrap">
-              <Clicker group="remote" option={window.RemoteWorking().all[0]} />
-              <Clicker group="remote" option={window.RemoteWorking().all[1]} />
-              <Clicker group="remote" option={window.RemoteWorking().all[2]} />
-            </div>
+            <ClickBox list={specs.remoteEnum.all} group="remote" selected={specs.remote} />
           </div>
 
           <div className="relocationpackage">
             <h4>relocation</h4>
-            <div className="specs-wrap">
-              <Clicker group="relocationpackage" option={window.RelocationPackages().all[0]} />
-              <Clicker group="relocationpackage" option={window.RelocationPackages().all[1]} />
-            </div>
+            <ClickBox list={specs.relocationpackageEnum.all} group="relocationpackage" selected={specs.relocationpackage} />
           </div>
         </section>
 
@@ -275,7 +253,21 @@ class App extends Component {
         </section>
 
         <section className="content-block equipment">
-          
+          <div className="operatingsystem">
+            {equip.operatingsystemEnum.all.map((elem)=>{
+              return (<div className={`os-item ${equip.operatingsystem.indexOf(elem)? 'os-select':''}`}>
+                elem
+              </div>);
+            })}
+          </div>
+          <div className="computer">
+            <h4>computer</h4>
+            <ClickBox list={equip.computerEnum.all} group="computer" selected={equip.computer} />
+          </div>
+          <div>
+            <h4>monitors</h4>
+            <span>{equip.monitors}</span>
+          </div>
         </section>
       </div>
     );

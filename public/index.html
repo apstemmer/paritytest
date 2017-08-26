@@ -6,7 +6,31 @@
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <script src="https://parity.io/javascript_advert.js"></script>
-    
+    <script>
+      //Needed to link all the possible options to the chosen option
+      //could have automated by parsing file but this is probably faster.
+      job.essentials.employmentEnum = EmploymentType();
+      job.essentials.salary.statusEnum = TaxStatus();
+      job.essentials.salary.intervalEnum = Interval();
+      job.essentials.companysizeEnum = CompanySize();
+      job.methodology.buildserverEnum = BuildServers();
+      job.methodology.staticcodeanalysisEnum = CodeAnalysisTools();
+      job.methodology.versioncontrolEnum = VersionControlSystem();
+      job.methodology.issuetrackerEnum = IssueTrackers();
+      job.methodology.knowledgerepoEnum = KnowledgeRepos();
+      job.methodology.agilemanagementEnum = AgileManagementSystems();
+      job.specs.travelEnum = TravelOptions();
+      job.specs.remoteEnum = RemoteWorking();
+      job.specs.relocationpackageEnum = RelocationPackages();
+      job.equipment.operatingsystemEnum = OperationSystems();
+      job.equipment.computerEnum = MachineType();
+      job.equipment.monitorEnum = Monitors();
+      job.technologies.levelEnum = Level();//anomalous
+      job.misc.trainingEnum = TrainingType();
+      job.misc.fossphilosophyEnum = FOSS();
+      job.misc.conferencesEnum = ConferencePotential();
+    </script>
+
     <!--
       Notice the use of %PUBLIC_URL% in the tag above.
       It will be replaced with the URL of the `public` folder during the build.
