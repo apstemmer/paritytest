@@ -123,7 +123,7 @@ class App extends Component {
     for(var elem in profile){
       profArray.push(
         <div className={`profile-part ${elem}`} style={{width:profile[elem]+'%'}}>
-          {elem}:{profile[elem]}%
+          <span>{elem}:{profile[elem]}%</span>
         </div>
       )
     }

@@ -1,5 +1,35 @@
 .profile-part{
-  height: 30px;
-  background-color: blue;
+  font-size: 30px;
+  font-weight: bold;
+  height: 150px;
   display: inline-block;
+  background-color: yellow;
+}
+
+.profile-part span{
+  display: inline-block;
+  transform: rotate(0deg);
+  transform-origin: left;
+  position: relative;
+}
+
+.profile-part:nth-child(2) span{
+  top:20%;
+}
+.profile-part:nth-child(2){
+  background-color: orange
+}
+
+
+.profile-part:nth-child(3) span{
+  top:40%;
+}
+.profile-part:nth-child(3){
+    background-color: red;
+}
+.profile-part:nth-child(4) span{
+  top:60%;
+}
+.profile-part:nth-child(5) span{
+  top:80%;
 }
