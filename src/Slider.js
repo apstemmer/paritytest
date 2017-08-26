@@ -3,9 +3,12 @@ import './Slider.css'
 
 export default class Slider extends Component {
   render(){
+    console.log('active',this.props.active);
     return (
-      <div className="Slider">
-        <input type="checkbox" defaultChecked={this.props.active} />
+      <div className="Slider" onClick={()=>{
+        this.props.onToggle(this.props.route);
+      }} >
+        <input type="checkbox" checked={ this.props.active }  />
         <span className="slide-span"></span>
       </div>);
   }

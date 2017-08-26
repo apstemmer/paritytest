@@ -86,7 +86,6 @@ class App extends Component {
 
   handleSelect(location, updated){
     let newState = this.state.desc[location[0]];
-    console.log(newState);
     newState[location[1]] = updated;
     let temp = {};
     temp[location[0]] = newState;
@@ -94,7 +93,13 @@ class App extends Component {
   }
 
   toggleSwitch(loc){
-    console.log(loc);
+    let newState = this.state.desc[loc[0]];
+
+    newState[loc[1]] = !newState[loc[1]];
+    let temp= {};
+    temp[loc[0]] = newState;
+    //console.log(temp);
+    this.setState(temp);
   }
 
   handleIncrement(location, change, min, max){
@@ -130,7 +135,7 @@ class App extends Component {
         methelem.push(
           <div className={`slide-wrap ${elem}`}>
             <h4>{elem}</h4>
-            <Slider active={meth[elem]} onToggle={this.toggleSwitch}/>
+            <Slider active={meth[elem]} route={['methodology',elem]} onToggle={this.toggleSwitch}/>
           </div>
         );
       }
