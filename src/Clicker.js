@@ -3,8 +3,9 @@ import './Clicker.css'
 
 export default class Clicker extends Component {
   render(){
+
     return (
-      <button className={`Clicker ${this.props.group} ${this.props.selected ? 'ClickSelect' : ''}`}>
+      <button className={`Clicker ${this.props.selected ? 'ClickSelect' : ''}`} onClick={ ()=>{this.props.onClick(this.props.route, this.props.option)} } >
         {this.props.option}
       </button>
     );

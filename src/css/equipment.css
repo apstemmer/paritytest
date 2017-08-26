@@ -1,0 +1,29 @@
+.equipment > div{
+  margin: 20px 0;
+}
+
+.operatingsystem{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.os-item{
+  display: inline-block;
+}
+
+.os-item img{
+  width: 80px;
+  height: 80px;
+}
+
+.computer{
+  display: flex;
+  flex-direction: row;
+}
+
+.computer>div{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}

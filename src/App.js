@@ -1,18 +1,19 @@
 
-import React, { Component } from 'react';
-import SimpleStorageContract from '../build/contracts/SimpleStorage.json';
-import Clicker from './Clicker.js';
-import ClickBox from './ClickBox.js'
-import getWeb3 from './utils/getWeb3';
-import Slider from './Slider.js';
-import Increment from './Increment.js';
-import _ from 'lodash';
+import React, { Component } from "react";
+import SimpleStorageContract from "../build/contracts/SimpleStorage.json";
+import Clicker from "./Clicker.js";
+import ClickBox from "./ClickBox.js"
+import getWeb3 from "./utils/getWeb3";
+import Slider from "./Slider.js";
+import Increment from "./Increment.js";
+import _ from "lodash";
 
-import './App.css'
-import './css/essentials.css'
-import './css/methodology.css'
-import './css/specs.css'
-import './css/profile.css'
+import "./App.css"
+import "./css/essentials.css"
+import "./css/methodology.css"
+import "./css/specs.css"
+import "./css/profile.css"
+import "./css/equipment.css"
 
 class App extends Component {
   constructor(props) {
@@ -25,6 +26,8 @@ class App extends Component {
     }
 
     this.handleIncrement  = this.handleIncrement.bind(this);
+    this.handleSelect  = this.handleSelect.bind(this);
+    this.toggleSwitch  = this.toggleSwitch.bind(this);
   }
 
   componentWillMount() {
@@ -41,7 +44,7 @@ class App extends Component {
       this.instantiateContract()
     })
     .catch(() => {
-      console.log('Error finding web3.')
+      console.log("Error finding web3.")
     });
   }
 
@@ -50,10 +53,10 @@ class App extends Component {
      * SMART CONTRACT EXAMPLE
      *
      * Normally these functions would be called in the context of a
-     * state management library, but for convenience I've placed them here.
+     * state management library, but for convenience I"ve placed them here.
      */
 
-    const contract = require('truffle-contract')
+    const contract = require("truffle-contract")
     const simpleStorage = contract(SimpleStorageContract)
     simpleStorage.setProvider(this.state.web3.currentProvider)
 
@@ -79,6 +82,19 @@ class App extends Component {
 
   componentDidMount(){
 
+  }
+
+  handleSelect(location, updated){
+    let newState = this.state.desc[location[0]];
+    console.log(newState);
+    newState[location[1]] = updated;
+    let temp = {};
+    temp[location[0]] = newState;
+    this.setState(temp);
+  }
+
+  toggleSwitch(loc){
+    console.log(loc);
   }
 
   handleIncrement(location, change, min, max){
@@ -110,11 +126,11 @@ class App extends Component {
     let startdate = new Date(essentials.startdate);
     let methelem = [], methclick = [], profArray = [];
     for(var elem in meth){
-      if(typeof meth[elem] === 'boolean'){
+      if(typeof meth[elem] === "boolean"){
         methelem.push(
           <div className={`slide-wrap ${elem}`}>
             <h4>{elem}</h4>
-            <Slider active={meth[elem]} />
+            <Slider active={meth[elem]} onToggle={this.toggleSwitch}/>
           </div>
         );
       }
@@ -122,7 +138,7 @@ class App extends Component {
 
     for(var elem in profile){
       profArray.push(
-        <div className={`profile-part ${elem}`} style={{width:profile[elem]+'%'}}>
+        <div className={`profile-part ${elem}`} style={{width:profile[elem]+"%"}}>
           <span>{elem}:{profile[elem]}%</span>
         </div>
       )
@@ -141,12 +157,12 @@ class App extends Component {
         <section className="essentials content-block">
           <div className="locations">
             <h5>locations</h5>
-            <ClickBox list={essentials.locations} group="locations" selected={essentials.locations[0]} />
+            <ClickBox list={essentials.locations} route={["essentials","locations"]} selected={essentials.locations[0]} onSelect={this.handleSelect} />
           </div>
 
           <div className="employment">
             <h5>employment</h5>
-            <ClickBox list={essentials.employmentEnum.all} group="employment" selected={essentials.employment} />
+            <ClickBox list={essentials.employmentEnum.all} route={["essentials","employment"]} selected={essentials.employment} onSelect={this.handleSelect} />
           </div>
 
           <div className="startdate">
@@ -157,7 +173,7 @@ class App extends Component {
           <div className="salary">
             <h4>{essentials.salary.status} Salary </h4>
             <div>{`${essentials.salary.amount} ${essentials.salary.currency}/${essentials.salary.interval}`}</div>
-            <span>stocks: {essentials.salary.stockoptions ? 'yup' : 'nope'}</span>
+            <span>stocks: {essentials.salary.stockoptions ? "yup" : "nope"}</span>
           </div>
 
           <div className="industry">
@@ -167,7 +183,7 @@ class App extends Component {
 
           <div className="companysize">
             <h5>size of company</h5>
-            <ClickBox list={essentials.companysizeEnum.all} group="companysize" selected={essentials.companysize} />
+            <ClickBox list={essentials.companysizeEnum.all} route={["essentials","companysize"]} selected={essentials.companysize} onSelect={this.handleSelect} />
           </div>
 
           <div className="teamsize">
@@ -180,32 +196,32 @@ class App extends Component {
           {methelem}
           <div className="click-wrap">
             <h5>buildserver</h5>
-            <ClickBox list={meth.buildserverEnum.all} group="buildserver" selected={meth.buildserver} />
+            <ClickBox list={meth.buildserverEnum.all} route={["methodology","buildserver"]} selected={meth.buildserver} onSelect={this.handleSelect} />
           </div>
 
           <div className="click-wrap">
             <h5>static code analysis</h5>
-            <ClickBox list={meth.staticcodeanalysisEnum.all} group="staticcodeanalysis" selected={meth.staticcodeanalysis} />
+            <ClickBox list={meth.staticcodeanalysisEnum.all} route={["methodology","staticcodeanalysis"]} selected={meth.staticcodeanalysis} onSelect={this.handleSelect} />
           </div>
 
           <div className="click-wrap">
             <h5>version control</h5>
-            <ClickBox list={meth.versioncontrolEnum.all} group="versioncontrol" selected={meth.versioncontrol} />
+            <ClickBox list={meth.versioncontrolEnum.all} route={["methodology","versioncontrol"]} selected={meth.versioncontrol} onSelect={this.handleSelect} />
           </div>
 
           <div className="click-wrap">
             <h5>issue tracker</h5>
-            <ClickBox list={meth.issuetrackerEnum.all} group="issuetracker" selected={meth.issuetracker} />
+            <ClickBox list={meth.issuetrackerEnum.all} route={["methodology","issuetracker"]} selected={meth.issuetracker} onSelect={this.handleSelect} />
           </div>
 
           <div className="click-wrap">
             <h5>knowledge repo</h5>
-            <ClickBox list={meth.knowledgerepoEnum.all} group="knowledgerepo" selected={meth.knowledgerepo} />
+            <ClickBox list={meth.knowledgerepoEnum.all} route={["methodology","knowledgerepo"]} selected={meth.knowledgerepo} onSelect={this.handleSelect} />
           </div>
 
           <div className="click-wrap">
             <h5>agile management</h5>
-            <ClickBox list={meth.agilemanagementEnum.all} group="agilemanagement" selected={meth.agilemanagement} />
+            <ClickBox list={meth.agilemanagementEnum.all} route={["methodology","agilemanagement"]} selected={meth.agilemanagement} onSelect={this.handleSelect} />
           </div>
 
         </section>
@@ -214,37 +230,37 @@ class App extends Component {
 
           <div className="increment-wrapper">
             <div className="workload">
-              <h4>workload</h4>
+              <h5>workload</h5>
               <Increment loc="workload" min={0.1} max={10} step={0.1} val={specs.workload} handleChange={this.handleIncrement}/>
             </div>
             <div className="workweek">
-              <h4>workweek</h4>
+              <h5>workweek</h5>
               <Increment loc="workweek" min={1} max={100} step={1} val={specs.workweek/3600} handleChange={this.handleIncrement}/>
             </div>
             <div className="holdidays">
-              <h4>holidays</h4>
+              <h5>holidays</h5>
               <Increment loc="holidays" min={0} max={90} step={1} val={specs.holidays} handleChange={this.handleIncrement}/>
             </div>
           </div>
 
           <div className="corehours">
-            <h4>core hours</h4>
+            <h5>core hours</h5>
             <span> {specs.corehours.from} to {specs.corehours.to}</span>
           </div>
 
           <div className="travel">
-            <h4>travel</h4>
-            <ClickBox list={specs.travelEnum.all} group="travel" selected={specs.travel} />
+            <h5>travel</h5>
+            <ClickBox list={specs.travelEnum.all} route={["specs","travel"]} selected={specs.travel} onSelect={this.handleSelect} />
           </div>
 
           <div className="remote">
-            <h4>remote</h4>
-            <ClickBox list={specs.remoteEnum.all} group="remote" selected={specs.remote} />
+            <h5>remote</h5>
+            <ClickBox list={specs.remoteEnum.all} route={["specs","remote"]} selected={specs.remote} onSelect={this.handleSelect} />
           </div>
 
           <div className="relocationpackage">
-            <h4>relocation</h4>
-            <ClickBox list={specs.relocationpackageEnum.all} group="relocationpackage" selected={specs.relocationpackage} />
+            <h5>relocation</h5>
+            <ClickBox list={specs.relocationpackageEnum.all} route={["specs","relocationpackage"]} selected={specs.relocationpackage} onSelect={this.handleSelect} />
           </div>
         </section>
 
@@ -255,20 +271,23 @@ class App extends Component {
         <section className="content-block equipment">
           <div className="operatingsystem">
             {equip.operatingsystemEnum.all.map((elem)=>{
-              return (<div className={`os-item ${equip.operatingsystem.indexOf(elem)? 'os-select':''}`}>
-                elem
+              return (<div className={`os-item ${equip.operatingsystem.indexOf(elem)? "os-select":""}`}>
+                <img src={require(`./images/${elem}.svg`)}/>
+                <h4>{elem}</h4>
               </div>);
             })}
           </div>
           <div className="computer">
-            <h4>computer</h4>
-            <ClickBox list={equip.computerEnum.all} group="computer" selected={equip.computer} />
+            <h5>computer</h5>
+            <ClickBox list={equip.computerEnum.all} route={["equipment","computer"]} selected={equip.computer} onSelect={this.handleSelect} />
           </div>
           <div>
-            <h4>monitors</h4>
+            <h5>monitors</h5>
             <span>{equip.monitors}</span>
           </div>
         </section>
+        <footer>
+        </footer>
       </div>
     );
   }
