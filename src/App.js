@@ -19,6 +19,7 @@ class App extends Component {
   constructor(props) {
     super(props)
 
+
     this.state = {
       storageValue: 0,
       web3: null,
@@ -162,7 +163,7 @@ class App extends Component {
         <section className="essentials content-block">
           <div className="locations">
             <h5>locations</h5>
-            <ClickBox list={essentials.locations} route={["essentials","locations"]} selected={essentials.locations[0]} onSelect={this.handleSelect} />
+            <ClickBox list={essentials.locations} route={["essentials","locselect"]} selected={essentials.locselect} onSelect={this.handleSelect} />
           </div>
 
           <div className="employment">

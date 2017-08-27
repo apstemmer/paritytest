@@ -5,6 +5,7 @@ import './ClickBox.css'
 export default class ClickBox extends Component {
 
   render(){
+    console.log(this.props);
     return (
     <div>
       {this.props.list.map((elem)=>{
