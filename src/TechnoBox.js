@@ -13,7 +13,18 @@ export default class TechnoBox extends Component {
       );
     }
     else if(Object.prototype.toString.call(this.props.level) === '[object Object]'){
-      return <div></div>
+      let oneofs = [];
+      for(let elem in this.props.level){
+        oneofs.push(<div className="tech-oneof">
+            {elem}
+          </div>);
+      }
+      return(
+        <div className={`TechnoBox`}>
+          {oneofs}
+          <h5>{this.props.title}</h5>
+        </div>
+      );
     }
   }
 }

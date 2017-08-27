@@ -182,15 +182,6 @@ class App extends Component {
         </header>
 
         <section className="essentials content-block">
-          <div className="locations">
-            <h5>locations</h5>
-            <ClickBox list={essentials.locations} route={["essentials","locselect"]} selected={essentials.locselect} onSelect={this.handleSelect} />
-          </div>
-
-          <div className="employment">
-            <h5>employment</h5>
-            <ClickBox list={essentials.employmentEnum.all} route={["essentials","employment"]} selected={essentials.employment} onSelect={this.handleSelect} />
-          </div>
 
           <div className="startdate">
             <h5>start date</h5>
@@ -208,20 +199,63 @@ class App extends Component {
             <span>{essentials.industry}</span>
           </div>
 
-          <div className="companysize">
-            <h5>size of company</h5>
-            <ClickBox list={essentials.companysizeEnum.all} route={["essentials","companysize"]} selected={essentials.companysize} onSelect={this.handleSelect} />
-          </div>
+
 
           <div className="teamsize">
             <h5>size of team</h5>
             <span>{essentials.teamsize.min} - {essentials.teamsize.max}</span>
+          </div>
+
+          <div className="corehours">
+            <h5>core hours</h5>
+            <span> {specs.corehours.from} to {specs.corehours.to}</span>
+          </div>
+        </section>
+
+        <section className="specs content-block">
+
+          <div className="increment-wrapper">
+            <div className="workload">
+              <h5>workload</h5>
+              <Increment loc="workload" min={0.1} max={10} step={0.1} val={specs.workload} handleChange={this.handleIncrement}/>
+            </div>
+            <div className="workweek">
+              <h5>workweek</h5>
+              <Increment loc="workweek" min={1} max={100} step={1} val={specs.workweek/3600} handleChange={this.handleIncrement}/>
+            </div>
+            <div className="holdidays">
+              <h5>holidays</h5>
+              <Increment loc="holidays" min={0} max={90} step={1} val={specs.holidays} handleChange={this.handleIncrement}/>
+            </div>
           </div>
         </section>
 
         <section className="methodology content-block">
           {methelem}
           {miscelem}
+        </section>
+
+        <section className="content-block profile">
+          {profArray}
+        </section>
+
+        <section className="methodology content-block">
+
+          <div className="click-wrap">
+            <h5>locations</h5>
+            <ClickBox list={essentials.locations} route={["essentials","locselect"]} selected={essentials.locselect} onSelect={this.handleSelect} />
+          </div>
+
+          <div className="click-wrap">
+            <h5>company size</h5>
+            <ClickBox list={essentials.companysizeEnum.all} route={["essentials","companysize"]} selected={essentials.companysize} onSelect={this.handleSelect} />
+          </div>
+
+          <div className="click-wrap">
+            <h5>employment</h5>
+            <ClickBox list={essentials.employmentEnum.all} route={["essentials","employment"]} selected={essentials.employment} onSelect={this.handleSelect} />
+          </div>
+
           <div className="click-wrap">
             <h5>buildserver</h5>
             <ClickBox list={meth.buildserverEnum.all} route={["methodology","buildserver"]} selected={meth.buildserver} onSelect={this.handleSelect} />
@@ -267,50 +301,38 @@ class App extends Component {
             <ClickBox list={specs.relocationpackageEnum.all} route={["specs","relocationpackage"]} selected={specs.relocationpackage} onSelect={this.handleSelect} />
           </div>
 
-        </section>
-
-        <section className="specs content-block">
-
-          <div className="increment-wrapper">
-            <div className="workload">
-              <h5>workload</h5>
-              <Increment loc="workload" min={0.1} max={10} step={0.1} val={specs.workload} handleChange={this.handleIncrement}/>
-            </div>
-            <div className="workweek">
-              <h5>workweek</h5>
-              <Increment loc="workweek" min={1} max={100} step={1} val={specs.workweek/3600} handleChange={this.handleIncrement}/>
-            </div>
-            <div className="holdidays">
-              <h5>holidays</h5>
-              <Increment loc="holidays" min={0} max={90} step={1} val={specs.holidays} handleChange={this.handleIncrement}/>
-            </div>
+          <div className="click-wrap">
+            <h5>training</h5>
+            <ClickBox list={misc.trainingEnum.all} route={["misc","training"]} selected={misc.training} onSelect={this.handleSelect} />
           </div>
 
-          <div className="corehours">
-            <h5>core hours</h5>
-            <span> {specs.corehours.from} to {specs.corehours.to}</span>
+          <div className="click-wrap">
+            <h5>foss philosphy</h5>
+            <ClickBox list={misc.fossphilosophyEnum.all} route={["misc","fossphilosophy"]} selected={misc.fossphilosophy} onSelect={this.handleSelect} />
           </div>
 
+          <div className="click-wrap">
+            <h5>conferences</h5>
+            <ClickBox list={misc.conferencesEnum.all} route={["misc","conferences"]} selected={misc.conferences} onSelect={this.handleSelect} />
+          </div>
 
-        </section>
+          <div className="click-wrap">
+            <h5>computer</h5>
+            <ClickBox list={equip.computerEnum.all} route={["equipment","computer"]} selected={equip.computer} onSelect={this.handleSelect} />
+          </div>
 
-        <section className="content-block profile">
-          {profArray}
         </section>
 
         <section className="content-block equipment">
           <div className="operatingsystem">
-            {equip.operatingsystemEnum.all.map((elem)=>{
+            {equip.operatingsystem.map((elem)=>{
               return (<div key={elem} className={`os-item ${equip.operatingsystem.indexOf(elem)? "os-select":""}`}>
                 <img src={require(`./images/${elem}.svg`)}/>
                 <h4>{elem}</h4>
               </div>);
             })}
           </div>
-          <div className="computer">
-            <h5>computer</h5>
-            <ClickBox list={equip.computerEnum.all} route={["equipment","computer"]} selected={equip.computer} onSelect={this.handleSelect} />
-          </div>
+
           <div>
             <h5>monitors</h5>
             <span>{equip.monitors}</span>
@@ -320,6 +342,7 @@ class App extends Component {
         <section className="technologies content-block">
           {techelems}
         </section>
+
         <footer>
         </footer>
 

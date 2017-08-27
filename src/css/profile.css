@@ -1,35 +1,28 @@
 .profile-part{
   font-size: 30px;
   font-weight: bold;
-  height: 150px;
+  height: 10em;
   display: inline-block;
   background-color: yellow;
 }
 
 .profile-part span{
   display: inline-block;
-  transform: rotate(0deg);
+  position: relative;
+  transform: rotate(90deg);
   transform-origin: left;
+  left:20px;
   position: relative;
 }
 
-.profile-part:nth-child(2) span{
-  top:20%;
-}
+
 .profile-part:nth-child(2){
   background-color: orange
 }
 
-
-.profile-part:nth-child(3) span{
-  top:40%;
-}
 .profile-part:nth-child(3){
     background-color: red;
 }
-.profile-part:nth-child(4) span{
-  top:60%;
-}
 .profile-part:nth-child(5) span{
-  top:80%;
+  left: 50px;
 }
