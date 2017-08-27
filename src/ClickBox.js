@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Clicker from './Clicker.js'
-import './ClickBox.css'
+import './ClickBox.scss'
 
 export default class ClickBox extends Component {
 
