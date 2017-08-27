@@ -1,0 +1,38 @@
+.TechnoBox{
+  text-align: center;
+  display: inline-block;
+  padding: 15px;
+  margin: 10px;
+  width: 200px;
+  height: 200px;
+  border: 3px solid;
+}
+
+.TechnoBox img{
+    width: 180px;
+    height: 180px;
+    fill: #FFF;
+}
+
+.technologies{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.technologies h5{
+  width: auto;
+}
+
+.level-Expert{
+    border-color: green;
+}
+
+.level-Good{
+    border-color: orange;
+}
+
+.level-Familiar{
+    border-color: yellow;
+}

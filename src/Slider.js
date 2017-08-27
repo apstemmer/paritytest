@@ -3,7 +3,6 @@ import './Slider.css'
 
 export default class Slider extends Component {
   render(){
-    console.log('active',this.props.active);
     return (
       <div className="Slider" onClick={()=>{
         this.props.onToggle(this.props.route);

@@ -6,6 +6,7 @@ import ClickBox from "./ClickBox.js"
 import getWeb3 from "./utils/getWeb3";
 import Slider from "./Slider.js";
 import Increment from "./Increment.js";
+import TechnoBox from "./TechnoBox.js";
 import _ from "lodash";
 
 import "./App.css"
@@ -14,6 +15,8 @@ import "./css/methodology.css"
 import "./css/specs.css"
 import "./css/profile.css"
 import "./css/equipment.css"
+import "./css/other.css"
+
 
 class App extends Component {
   constructor(props) {
@@ -130,11 +133,12 @@ class App extends Component {
     let misc = this.state.desc.misc;
 
     let startdate = new Date(essentials.startdate);
-    let methelem = [], methclick = [], profArray = [];
-    for(var elem in meth){
+    let floatarray = oth.concat(misc.freestuff);
+    let methelem = [], methclick = [], profArray = [], techelems=[], miscelem = [];
+    for(let elem in meth){
       if(typeof meth[elem] === "boolean"){
         methelem.push(
-          <div className={`slide-wrap ${elem}`}>
+          <div key={elem} className={`slide-wrap ${elem}`}>
             <h4>{elem}</h4>
             <Slider active={meth[elem]} route={['methodology',elem]} onToggle={this.toggleSwitch}/>
           </div>
@@ -142,12 +146,29 @@ class App extends Component {
       }
     }
 
-    for(var elem in profile){
+    for(let elem in misc){
+      if(typeof misc[elem] === "boolean"){
+        miscelem.push(
+          <div key={elem} className={`slide-wrap ${elem}`}>
+            <h4>{elem}</h4>
+            <Slider active={misc[elem]} route={['misc',elem]} onToggle={this.toggleSwitch}/>
+          </div>
+        );
+      }
+    }
+
+    for(let elem in profile){
       profArray.push(
-        <div className={`profile-part ${elem}`} style={{width:profile[elem]+"%"}}>
+        <div key={elem} className={`profile-part ${elem}`} style={{width:profile[elem]+"%"}}>
           <span>{elem}:{profile[elem]}%</span>
         </div>
       )
+    }
+
+    for(let elem in tech){
+      techelems.push(
+        <TechnoBox key={elem} title={elem} level={tech[elem]} />
+      );
     }
 
     return (
@@ -200,6 +221,7 @@ class App extends Component {
 
         <section className="methodology content-block">
           {methelem}
+          {miscelem}
           <div className="click-wrap">
             <h5>buildserver</h5>
             <ClickBox list={meth.buildserverEnum.all} route={["methodology","buildserver"]} selected={meth.buildserver} onSelect={this.handleSelect} />
@@ -230,6 +252,21 @@ class App extends Component {
             <ClickBox list={meth.agilemanagementEnum.all} route={["methodology","agilemanagement"]} selected={meth.agilemanagement} onSelect={this.handleSelect} />
           </div>
 
+          <div className="click-wrap">
+            <h5>travel</h5>
+            <ClickBox list={specs.travelEnum.all} route={["specs","travel"]} selected={specs.travel} onSelect={this.handleSelect} />
+          </div>
+
+          <div className="click-wrap">
+            <h5>remote</h5>
+            <ClickBox list={specs.remoteEnum.all} route={["specs","remote"]} selected={specs.remote} onSelect={this.handleSelect} />
+          </div>
+
+          <div className="click-wrap">
+            <h5>relocation</h5>
+            <ClickBox list={specs.relocationpackageEnum.all} route={["specs","relocationpackage"]} selected={specs.relocationpackage} onSelect={this.handleSelect} />
+          </div>
+
         </section>
 
         <section className="specs content-block">
@@ -254,20 +291,7 @@ class App extends Component {
             <span> {specs.corehours.from} to {specs.corehours.to}</span>
           </div>
 
-          <div className="travel">
-            <h5>travel</h5>
-            <ClickBox list={specs.travelEnum.all} route={["specs","travel"]} selected={specs.travel} onSelect={this.handleSelect} />
-          </div>
 
-          <div className="remote">
-            <h5>remote</h5>
-            <ClickBox list={specs.remoteEnum.all} route={["specs","remote"]} selected={specs.remote} onSelect={this.handleSelect} />
-          </div>
-
-          <div className="relocationpackage">
-            <h5>relocation</h5>
-            <ClickBox list={specs.relocationpackageEnum.all} route={["specs","relocationpackage"]} selected={specs.relocationpackage} onSelect={this.handleSelect} />
-          </div>
         </section>
 
         <section className="content-block profile">
@@ -277,7 +301,7 @@ class App extends Component {
         <section className="content-block equipment">
           <div className="operatingsystem">
             {equip.operatingsystemEnum.all.map((elem)=>{
-              return (<div className={`os-item ${equip.operatingsystem.indexOf(elem)? "os-select":""}`}>
+              return (<div key={elem} className={`os-item ${equip.operatingsystem.indexOf(elem)? "os-select":""}`}>
                 <img src={require(`./images/${elem}.svg`)}/>
                 <h4>{elem}</h4>
               </div>);
@@ -292,8 +316,20 @@ class App extends Component {
             <span>{equip.monitors}</span>
           </div>
         </section>
+
+        <section className="technologies content-block">
+          {techelems}
+        </section>
         <footer>
         </footer>
+
+        {
+          floatarray.map((elem,num)=>{
+            let pos = (num % 3) >= 2 ? 'fl-right' : 'fl-left'
+            return (<span key={num} className={`floater fl-${num} ${pos}`} style={{animationDelay:(Math.random()*30)+'s',}}>{elem}</span>);
+          })
+        }
+
       </div>
     );
   }
